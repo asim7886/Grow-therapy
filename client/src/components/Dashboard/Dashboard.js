@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import './Dashboard.css';
 import DatePicker from '../DatePicker/DatePicker';
+import BarGraph  from '../BarGraph/BarGraph';
 import Moment from 'react-moment';
 import moment from 'moment';
 import axios from "axios";
@@ -71,7 +72,7 @@ const Dashboard = props => {
                         <DatePicker intialDate={selectedDay} setDate={setSelectedDay} />
                     </Col>
                     <Col span={16}>
-                        Analytics to go here!
+                        <BarGraph wikiData={wikiData} />
                     </Col>
                 </Row>
             </Content>

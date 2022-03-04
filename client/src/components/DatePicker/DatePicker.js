@@ -11,14 +11,14 @@ const DatePicker = ({intialDate, setDate}) => {
     
     return (
         <div>
-            <h2 className='picker-title'>To Get Started, select a date!</h2>
             <Calendar value={intialDate} fullscreen={false} onSelect={dateSelected} />
         </div>
     )
 }
 
 DatePicker.propTypes = {
-
+    intialDate: PropTypes.object,
+    setDate: PropTypes.func
 }
 
 export default DatePicker
