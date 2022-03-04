@@ -10,3 +10,8 @@
 .data-col {
     height: 3000px;
 }
+
+.content-container {
+    padding: 20px;
+    margin: 0 16px;
+}

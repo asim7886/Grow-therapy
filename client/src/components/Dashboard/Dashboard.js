@@ -7,6 +7,7 @@ import {
 import './Dashboard.css';
 import DatePicker from '../DatePicker/DatePicker';
 import BarGraph  from '../BarGraph/BarGraph';
+import Filter from '../Filter/Filter';
 import Moment from 'react-moment';
 import moment from 'moment';
 import axios from "axios";
@@ -22,6 +23,7 @@ const Dashboard = props => {
     const [collapsed, setCollapsed] = useState(false); // manages the side menu position
     const [wikiData, setWikiData] = useState({});
     const [view, setView] = useState('datePicker');
+    const [filter, setFilter] = useState(100);
     
     const onCollapse = collapsed => {
         setCollapsed(collapsed); 
@@ -47,18 +49,14 @@ const Dashboard = props => {
     useEffect(() => {
         getWikiData(selectedDay);
     },[selectedDay]);
-
-    useEffect(() => {
-        console.log(wikiData);
-    },[wikiData]);
-
+    
 
     // DYNAMIC VIEWS
 
     const contentView = view == 'datePicker' ? (
         <DatePicker intialDate={selectedDay} setDate={setSelectedDay} />
     ) : (
-        <BarGraph wikiData={wikiData} />
+        <BarGraph updateFilter={setFilter} filter={filter} wikiData={wikiData} />
     );
 
   return (
@@ -78,7 +76,7 @@ const Dashboard = props => {
             </Sider>
             <Layout className="site-layout">
             <Header className="site-layout-background" style={{ padding: 0 }} />
-            <Content style={{ margin: '0 16px' }}>
+            <Content className='content-container'>
                 {contentView}
             </Content>
             <Footer style={{ textAlign: 'center' }}>Frontend Grow Therapy Assessment</Footer>
