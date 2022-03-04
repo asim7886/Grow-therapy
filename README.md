@@ -2,7 +2,11 @@
 
 ## To Run project
 
-In the project client directory, you can run:
+In the project client directory, run:
+
+### `npm install`
+
+then
 
 ### `npm start`
 
