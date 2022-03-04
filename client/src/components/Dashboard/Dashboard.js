@@ -30,7 +30,6 @@ const Dashboard = props => {
 
     const udpateView = view => {
         setView(view);
-        highlightMenuTab(view);
     }
 
     const getWikiData = (date) => {
@@ -54,7 +53,6 @@ const Dashboard = props => {
     useEffect(() => {
         getWikiData(selectedDay);
         udpateView('dataView');
-
     },[selectedDay]);
     
 
@@ -65,29 +63,13 @@ const Dashboard = props => {
         <BarGraph updateFilter={setFilter} filter={filter} wikiData={wikiData} selectedDate={selectedDay} />
     );
 
-    //DOM MINIPULATION
-
-    // this is not ideal but there is a bit of funkyness with ant design's menu items updating with state so for a quick fix this will do
-    // This should be refactored out in the future (if this was a real feature)
-    const highlightMenuTab = (view) => {
-        let elems = document.querySelectorAll(".ant-menu-item-selected");
-        [].forEach.call(elems, function(el) {
-            el.classList.remove("ant-menu-item-selected");
-        });
-    
-        let updateElems = document.querySelectorAll("." + view);
-        [].forEach.call(updateElems, function(el) {
-            el.classList.add("ant-menu-item-selected");
-        });
-    }
-
   return (
         <Layout style={{ minHeight: '100vh' }}>
             <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
                 <div className="logo">
                     <h1>WIKI ANALYTICS</h1>
                 </div>
-                <Menu theme="dark" defaultSelectedKeys={[view]} SelectedKeys={[view]} mode="inline">
+                <Menu theme="dark" defaultSelectedKeys={[view]} selectedKeys={[view]} mode="inline">
                     <Menu.Item className='datePicker' onClick={() => udpateView('datePicker')} key="datePicker" icon={<DesktopOutlined />}>
                         Pick Date
                     </Menu.Item>
