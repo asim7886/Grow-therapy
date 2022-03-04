@@ -49,7 +49,7 @@ const BarGraph = ({wikiData, filter, updateFilter, selectedDate}) => {
                 <h1>Displaying Data for {formattedDate}</h1>
             </Col>
             <Col span={12}>
-                <Filter updateFilter={updateFilter}  optionValues={filterValues} defaultIndex={3}/>
+                <Filter updateFilter={updateFilter}  optionValues={filterValues} defaultIndex={2}/>
             </Col>
         </Row>
         <h3 className='msg'>{message}</h3>
