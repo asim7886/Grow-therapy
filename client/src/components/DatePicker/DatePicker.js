@@ -11,7 +11,7 @@ const DatePicker = ({intialDate, setDate}) => {
     
     return (
         <div>
-            <Calendar value={intialDate} fullscreen={false} onSelect={dateSelected} />
+            <Calendar value={intialDate} fullscreen={true} onSelect={dateSelected} />
         </div>
     )
 }

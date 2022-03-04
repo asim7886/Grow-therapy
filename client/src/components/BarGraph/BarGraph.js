@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom';
 import { Bar } from '@ant-design/plots';
+import './BarGraph.css';
 
 const BarGraph = ({wikiData}) => {
     let data = [];
-    //console.log(wikiData.items[0].articles);
     if(wikiData.items && wikiData.items.length > 0) {
         data = wikiData.items[0].articles;
         console.log(data);
@@ -20,7 +20,7 @@ const BarGraph = ({wikiData}) => {
         },
     };
   return (
-    <div>
+    <div className='bar-graph-container'>
       <Bar {...config} />
     </div>
   )
