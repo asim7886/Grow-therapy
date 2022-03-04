@@ -6,7 +6,6 @@ import './DatePicker.css';
 const DatePicker = ({intialDate, setDate}) => {
     // update state
     const dateSelected =(value) => {
-        console.log(value);
         setDate(value);
     }
     

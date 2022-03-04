@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import { Layout, Menu, Row, Col } from 'antd';
 import {
   DesktopOutlined,
@@ -11,20 +11,42 @@ import './Dashboard.css';
 import DatePicker from '../DatePicker/DatePicker';
 import Moment from 'react-moment';
 import moment from 'moment';
+import axios from "axios";
 
 // This is layout of the application.
 
 const Dashboard = props => {
     const { Header, Content, Footer, Sider } = Layout;
-    const { SubMenu } = Menu;
-    
     const yesterday = moment().subtract(1, 'day'); 
+    // STATE 
     const [selectedDay, setSelectedDay] = useState(yesterday); // set the intial state to yesterday's date;
     const [collapsed, setCollapsed] = useState(false); // manages the side menu position
+    const [wikiData, setWikiData] = useState({});
     
     const onCollapse = collapsed => {
         setCollapsed(collapsed); 
-    };  
+    };
+
+    const getWikiData = (date) => {
+        const baseURL = "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/pt.wikipedia/all-access/";
+        const year = date.format('yyyy');
+        const month = date.format('MM');
+        let day = date.subtract(1, 'day').format('d');
+        day = day.length == 1 ? '0' + day : day;
+        const requstURL = baseURL + year + '/' + day+ '/' + month;
+        axios.get(requstURL).then((response) => {
+            setWikiData(response.data);
+        });
+    }
+
+    // HOOKS
+    useEffect(() => {
+        getWikiData(selectedDay);
+    },[selectedDay])
+
+    useEffect(() => {
+        console.log(wikiData);
+    },[wikiData])
 
   return (
         <Layout style={{ minHeight: '100vh' }}>
