@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Select } from 'antd';
+import './Filter.css';
 
 const Filter = ({optionValues, defaultIndex, updateFilter}) => {
     const { Option } = Select;
@@ -13,7 +14,7 @@ const Filter = ({optionValues, defaultIndex, updateFilter}) => {
     const optionItems = optionValues.map(genOption);
 
     return (
-        <Select defaultValue={optionValues[defaultIndex].value} style={{ width: 120 }} onChange={handleChange}>
+        <Select defaultValue={optionValues[defaultIndex].value} className='filter' onChange={handleChange}>
             {optionItems}
         </Select>
     )

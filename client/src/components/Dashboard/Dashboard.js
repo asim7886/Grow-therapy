@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from 'react';
-import { Layout, Menu, Row, Col } from 'antd';
+import { Layout, Menu } from 'antd';
 import {
   DesktopOutlined,
   BarChartOutlined
@@ -7,7 +7,6 @@ import {
 import './Dashboard.css';
 import DatePicker from '../DatePicker/DatePicker';
 import BarGraph  from '../BarGraph/BarGraph';
-import Filter from '../Filter/Filter';
 import Moment from 'react-moment';
 import moment from 'moment';
 import axios from "axios";
@@ -22,7 +21,7 @@ const Dashboard = props => {
     const [selectedDay, setSelectedDay] = useState(yesterday); // set the intial state to yesterday's date;
     const [collapsed, setCollapsed] = useState(false); // manages the side menu position
     const [wikiData, setWikiData] = useState({});
-    const [view, setView] = useState('datePicker');
+    const [view, setView] = useState('dataView');
     const [filter, setFilter] = useState(100);
     
     const onCollapse = collapsed => {
@@ -31,6 +30,7 @@ const Dashboard = props => {
 
     const udpateView = view => {
         setView(view);
+        highlightMenuTab(view);
     }
 
     const getWikiData = (date) => {
@@ -42,22 +42,44 @@ const Dashboard = props => {
         const requstURL = baseURL + year + '/' + day+ '/' + month;
         axios.get(requstURL).then((response) => {
             setWikiData(response.data);
-        });
+        }).catch(function (error) {
+            if (error.response) {
+              setWikiData(error.response.data);
+            }
+        
+          });
     }
 
     // HOOKS
     useEffect(() => {
         getWikiData(selectedDay);
+        udpateView('dataView');
+
     },[selectedDay]);
     
 
     // DYNAMIC VIEWS
-
     const contentView = view == 'datePicker' ? (
         <DatePicker intialDate={selectedDay} setDate={setSelectedDay} />
     ) : (
-        <BarGraph updateFilter={setFilter} filter={filter} wikiData={wikiData} />
+        <BarGraph updateFilter={setFilter} filter={filter} wikiData={wikiData} selectedDate={selectedDay} />
     );
+
+    //DOM MINIPULATION
+
+    // this is not ideal but there is a bit of funkyness with ant design's menu items updating with state so for a quick fix this will do
+    // This should be refactored out in the future (if this was a real feature)
+    const highlightMenuTab = (view) => {
+        let elems = document.querySelectorAll(".ant-menu-item-selected");
+        [].forEach.call(elems, function(el) {
+            el.classList.remove("ant-menu-item-selected");
+        });
+    
+        let updateElems = document.querySelectorAll("." + view);
+        [].forEach.call(updateElems, function(el) {
+            el.classList.add("ant-menu-item-selected");
+        });
+    }
 
   return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -65,11 +87,11 @@ const Dashboard = props => {
                 <div className="logo">
                     <h1>WIKI ANALYTICS</h1>
                 </div>
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                    <Menu.Item onClick={() => udpateView('datePicker')} key="1" icon={<DesktopOutlined />}>
+                <Menu theme="dark" defaultSelectedKeys={[view]} SelectedKeys={[view]} mode="inline">
+                    <Menu.Item className='datePicker' onClick={() => udpateView('datePicker')} key="datePicker" icon={<DesktopOutlined />}>
                         Pick Date
                     </Menu.Item>
-                    <Menu.Item onClick={() => udpateView('dataView')} key="2" icon={<BarChartOutlined />}>
+                    <Menu.Item className='dataView' onClick={() => udpateView('dataView')} key="dataView" icon={<BarChartOutlined />}>
                         Data Visualization 
                     </Menu.Item>
                 </Menu>
