@@ -7,7 +7,6 @@ import {
 import './Dashboard.css';
 import DatePicker from '../DatePicker/DatePicker';
 import BarGraph  from '../BarGraph/BarGraph';
-import Moment from 'react-moment';
 import moment from 'moment';
 import axios from "axios";
 import './Dashboard.css';
@@ -16,7 +15,8 @@ import './Dashboard.css';
 
 const Dashboard = props => {
     const { Header, Content, Footer, Sider } = Layout;
-    const yesterday = moment().subtract(1, 'day'); 
+    const yesterday = moment().subtract(1, 'day');
+    const today = moment();
     // STATE 
     const [selectedDay, setSelectedDay] = useState(yesterday); // set the intial state to yesterday's date;
     const [collapsed, setCollapsed] = useState(false); // manages the side menu position
@@ -47,7 +47,7 @@ const Dashboard = props => {
             }
         
           });
-    }
+    };
 
     // HOOKS
     useEffect(() => {

@@ -1,7 +1,8 @@
-import {React, useState} from 'react';
+import {React} from 'react';
 import PropTypes from 'prop-types';
 import { Calendar } from 'antd';
 import './DatePicker.css';
+import '../Filter/Filter';
 
 const DatePicker = ({intialDate, setDate}) => {
     // update state
