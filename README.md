@@ -21,6 +21,7 @@ You may also see any lint errors in the console.
 
 - Create a new tab & page on the dashboard
 - Display the article stats in a card format
+- The card should be a card component from ant design (https://ant.design/components/card/) 
 - The card should display the following three items 
       - article name 
       - rank 
