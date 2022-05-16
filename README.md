@@ -1,4 +1,4 @@
-# Grow-therapy
+# Wiki visualizer
 
 ## To Run project
 
